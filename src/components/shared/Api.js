@@ -74,7 +74,7 @@ export const makeDeleteRequest = data => fetch(data.url, {
   credentials: 'same-origin',
 });
 
-export const logoutAdmin = () => fetch('http://localhost:3000/admins/sign_out', {
+export const logoutAdmin = () => fetch('https://lyse-api.herokuapp.com/admins/sign_out', {
   method: 'DELETE',
   headers: {
     'X-CSRF-Token': csrfToken(),
@@ -85,7 +85,7 @@ export const logoutAdmin = () => fetch('http://localhost:3000/admins/sign_out', 
   credentials: 'same-origin',
 });
 
-export const loginAdmin = (data) => fetch('http://localhost:3000/admins/sign_in', {
+export const loginAdmin = (data) => fetch('https://lyse-api.herokuapp.com/admins/sign_in', {
   body: JSON.stringify(data.body),
   method: 'POST',
   headers: {
