@@ -7,10 +7,7 @@ const csrfToken = () => {
   return '';
 };
 
-const ApiUrl = {
-  'development': 'http://localhost:3001',
-  'production': 'https://lyse-api.herokuapp.com'
-}
+const ApiURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://lyse-api.herokuapp.com';
 
 export const makePutRequest = data => fetch(data.url, {
   body: JSON.stringify(data.body),
@@ -79,7 +76,7 @@ export const makeDeleteRequest = data => fetch(data.url, {
   credentials: 'same-origin',
 });
 
-export const logoutAdmin = () => fetch(`${ApiUrl[process.env.NODE_ENV]}/admins/sign_out`, {
+export const logoutAdmin = () => fetch(`${ApiURL}/admins/sign_out`, {
   method: 'DELETE',
   headers: {
     'X-CSRF-Token': csrfToken(),
@@ -90,7 +87,7 @@ export const logoutAdmin = () => fetch(`${ApiUrl[process.env.NODE_ENV]}/admins/s
   credentials: 'same-origin',
 });
 
-export const loginAdmin = (data) => fetch(`${ApiUrl[process.env.NODE_ENV]}/admins/sign_in`, {
+export const loginAdmin = (data) => fetch(`${ApiURL}/admins/sign_in`, {
   body: JSON.stringify(data.body),
   method: 'POST',
   headers: {
