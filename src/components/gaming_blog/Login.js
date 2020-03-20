@@ -46,6 +46,7 @@ class Login extends React.Component {
   }
 
   render() {
+    console.log(process.env.NODE_ENV)
     if (this.state.redirect) { return (<Redirect to='/' />); }
     return (
       <div className="content">
