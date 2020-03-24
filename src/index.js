@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GamingBlog from './components/GamingBlog';
+import GamingBlog from './components/gamingBlog';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<GamingBlog />, document.getElementById('root'));

@@ -1,0 +1,13 @@
+.navbar {
+  min-height: 100px;
+  .right-menu {
+    .login-button, .logout-button {
+      cursor: pointer;
+    }
+  }
+  .left-menu {
+    .add-post {
+      cursor: pointer;
+    }
+  }
+}

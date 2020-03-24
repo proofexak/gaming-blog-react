@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom'
-import * as Api from './../shared/Api'
+import * as Api from '../shared/api'
 
 class Login extends React.Component {
   constructor(props) {
