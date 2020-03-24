@@ -7,15 +7,16 @@ const csrfToken = () => {
   return '';
 };
 
-const ApiURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://lyse-api.herokuapp.com';
+const ApiURL = 'http://localhost:3001';
 
-export const makePutRequest = data => fetch(data.url, {
+export const makePutRequest = data => fetch(`${ApiURL}${data.url}`, {
   body: JSON.stringify(data.body),
   method: 'PUT',
   headers: {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
   },
   credentials: 'same-origin',
 }).then((response) => {
@@ -32,13 +33,14 @@ export const makePutRequest = data => fetch(data.url, {
   });
 });
 
-export const makePostRequest = params => fetch(params.url, {
+export const makePostRequest = params => fetch(`${ApiURL}${params.url}`, {
   body: JSON.stringify(params.body),
   method: 'POST',
   headers: {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
   },
   credentials: 'same-origin',
 }).then(response => (
@@ -52,11 +54,12 @@ export const makePostRequest = params => fetch(params.url, {
   })
 ));
 
-export const makeGetRequest = data => fetch(data.url, {
+export const makeGetRequest = data => fetch(`${ApiURL}${data.url}`, {
   headers: {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
   },
   credentials: 'same-origin',
 }).then(response => response.json().then(responseData => ({
@@ -66,12 +69,13 @@ export const makeGetRequest = data => fetch(data.url, {
   alert('There was an error trying to get data');
 });
 
-export const makeDeleteRequest = data => fetch(data.url, {
+export const makeDeleteRequest = data => fetch(`${ApiURL}${data.url}`, {
   method: 'DELETE',
   headers: {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
   },
   credentials: 'same-origin',
 });
@@ -99,7 +103,7 @@ export const loginAdmin = (data) => fetch(`${ApiURL}/admins/sign_in`, {
 }).then(response => (
   response.json().then((data) => {
     if (response.status >= 400 && response.status < 500) {
-      return Promise.reject(data);
+      return Promise.reject(data.error);
     }
     return {
       data,

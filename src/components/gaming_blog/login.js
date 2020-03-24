@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom'
-import * as Api from './../shared/Api'
+import * as Api from '../shared/api'
 
 class Login extends React.Component {
   constructor(props) {
@@ -46,7 +46,6 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log(process.env.NODE_ENV)
     if (this.state.redirect) { return (<Redirect to='/' />); }
     return (
       <div className="content">

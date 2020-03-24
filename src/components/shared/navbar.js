@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import * as Api from './Api'
+import * as Api from './api'
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class Navbar extends React.Component {
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
   }
-
+  
   state = {
     authorization_token: localStorage.getItem('authorization_token'),
   }
@@ -35,12 +35,20 @@ class Navbar extends React.Component {
     return (
       <div className="navbar">
         <div className="left-menu">
+          <NavLink className="item" to="/">BLOG</NavLink>
+        { authorization_token ? (
+            <NavLink className="item add-post" to="/post">Add post</NavLink>
+          ) : undefined
+          }
+        </div>
+        <div className="right-menu">
+          { /* wyswietlic modal zamiast linka */ }
           { authorization_token ? (
             <div className="logout-button" onClick={this.onLogoutClick}>
               Logout
             </div>
           ) : (
-            <NavLink className="item" to="/login">Login</NavLink>
+            <NavLink className="item login-button" to="/login">Login</NavLink>
           )
           }
         </div>

@@ -1,0 +1,15 @@
+.new-post {
+  .half-container {
+    input, textarea {
+      width: 50%;
+      margin: 0 auto;
+      &::placeholder, &:-moz-placeholder, &::-webkit-input-placeholder, &::-moz-placeholder {
+        text-align: center;
+      }
+      &:-ms-input-placeholder {
+        text-align: center;
+      }
+    }
+    
+  }
+}
