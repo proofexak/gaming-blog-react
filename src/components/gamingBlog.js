@@ -8,7 +8,8 @@ import NewPost from './gaming_blog/new_post';
 import ShowPost from './gaming_blog/show_post';
 import './../stylesheets/gaming_blog.scss';
 import './../stylesheets/navbar.scss';
-import './../stylesheets/posts.scss'
+import './../stylesheets/posts.scss';
+import './../stylesheets/login.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class GamingBlog extends React.Component {
@@ -29,7 +30,6 @@ class GamingBlog extends React.Component {
           <Navbar ref={(navbar) => { this.navbar = navbar; }}/>
           <div className="content">
             <Route path="/" exact component={Index} />
-            <Route path="/login" render={props => <Login updateNavbarToken={this.updateNavbarToken} />} />
             <Route path="/post" exact component={NewPost} />
             <Route path="/post/:id" exact component={ShowPost} />
             <Route path="/post/:id/edit" exact component={NewPost} />
