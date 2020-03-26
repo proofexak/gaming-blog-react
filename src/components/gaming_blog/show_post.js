@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Api from '../shared/api';
-import { Redirect } from 'react-router-dom'
+import reduxConnect from '../shared/reduxConnect';
+import { Redirect } from 'react-router-dom';
 
 class ShowPost extends React.Component {
   constructor(props) {
@@ -36,9 +37,12 @@ class ShowPost extends React.Component {
     if (post) {
       return (
         <div className="post-container">
-          <div className="edit-button" onClick={() => this.setState({ edit: true })}>
-            Edit
-          </div>
+          { this.props.token ? (
+            <div className="edit-button" onClick={() => this.setState({ edit: true })}>
+              Edit
+            </div>
+          ) : undefined
+          }
           <div className="post-title">
             {post.title}
           </div>
@@ -58,4 +62,4 @@ class ShowPost extends React.Component {
   }
 }
 
-export default ShowPost;
+export default reduxConnect(ShowPost);

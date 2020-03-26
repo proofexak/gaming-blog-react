@@ -1,6 +1,8 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom'
-import * as Api from '../shared/api'
+import { Redirect } from 'react-router-dom';
+import * as Api from '../shared/api';
+
+import reduxConnect from '../shared/reduxConnect';
 
 class Login extends React.Component {
   constructor(props) {
@@ -30,10 +32,8 @@ class Login extends React.Component {
     }).then((response) => {
       if (response.data.id) { 
         localStorage.setItem('authorization_token', response.data.token);
-        this.props.updateNavbarToken();
-        this.setState({
-          redirect: true,
-        });
+        this.props.setToken(response.data.token)
+        this.props.closeLoginPanel();
       }
     });
   }
@@ -48,7 +48,7 @@ class Login extends React.Component {
   render() {
     if (this.state.redirect) { return (<Redirect to='/' />); }
     return (
-      <div className="content">
+      <div className="login-panel-content">
         <div className="login-card">
           <div className="title">
             Logowanie
@@ -74,4 +74,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default reduxConnect(Login);
