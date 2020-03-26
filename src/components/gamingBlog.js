@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import Index from './gaming_blog/index';
-import Login from './gaming_blog/login';
 import Navbar from './shared/navbar';
 import NewPost from './gaming_blog/new_post';
 import ShowPost from './gaming_blog/show_post';
