@@ -8,7 +8,6 @@ const csrfToken = () => {
 };
 
 const ApiURL = 'http://localhost:3001';
-const authorizationToken = localStorage.getItem('authorization_token');
 
 export const makePutRequest = data => fetch(`${ApiURL}${data.url}`, {
   body: JSON.stringify(data.body),
@@ -17,7 +16,7 @@ export const makePutRequest = data => fetch(`${ApiURL}${data.url}`, {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${authorizationToken}`,
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
   },
   credentials: 'same-origin',
 }).then((response) => {
@@ -41,7 +40,7 @@ export const makePostRequest = params => fetch(`${ApiURL}${params.url}`, {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${authorizationToken}`,
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
   },
   credentials: 'same-origin',
 }).then(response => (
@@ -60,7 +59,7 @@ export const makeGetRequest = data => fetch(`${ApiURL}${data.url}`, {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${authorizationToken}`,
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
   },
   credentials: 'same-origin',
 }).then(response => response.json().then(responseData => ({
@@ -76,7 +75,7 @@ export const makeDeleteRequest = data => fetch(`${ApiURL}${data.url}`, {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${authorizationToken}`,
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
   },
   credentials: 'same-origin',
 });
@@ -87,7 +86,7 @@ export const logoutAdmin = () => fetch(`${ApiURL}/admins/sign_out`, {
     'X-CSRF-Token': csrfToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${authorizationToken}`
+    Authorization: `Bearer ${localStorage.getItem('authorization_token')}`
   },
   credentials: 'same-origin',
 });
