@@ -7,7 +7,7 @@ const csrfToken = () => {
   return '';
 };
 
-const ApiURL = 'https://lyse-api.herokuapp.com';
+const ApiURL = 'http://localhost:3001';
 
 export const makePutRequest = data => fetch(`${ApiURL}${data.url}`, {
   body: JSON.stringify(data.body),

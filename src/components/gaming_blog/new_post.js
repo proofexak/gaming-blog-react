@@ -105,7 +105,7 @@ class NewPost extends React.Component {
           </div>
           <div className="form-group">
             <Editor
-              initialValue={content}
+              value={content}
               init={{
                 height: 500,
                 menubar: true,
