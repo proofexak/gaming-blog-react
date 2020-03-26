@@ -1,12 +1,7 @@
 import React from 'react'
-import * as Api from '../shared/api';
 import { Redirect } from 'react-router-dom';
 
 class Post extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     show: false,
   }

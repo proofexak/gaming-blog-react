@@ -115,9 +115,9 @@ class NewPost extends React.Component {
                   'insertdatetime media table paste code help wordcount'
                 ],
                 toolbar:
-                  'image | undo redo | formatselect | bold italic backcolor | \
-                  alignleft aligncenter alignright alignjustify | \
-                  bullist numlist outdent indent | removeformat | help',
+                  'image | undo redo | formatselect | bold italic backcolor | ' +
+                  'alignleft aligncenter alignright alignjustify | ' +
+                  'bullist numlist outdent indent | removeformat | help',
                 image_title: true,
                 automatic_uploads: true,
                 content_css: '//www.tiny.cloud/css/codepen.min.css',
