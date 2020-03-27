@@ -10,6 +10,7 @@ class NewPost extends React.Component {
     this.onTextChange = this.onTextChange.bind(this);
     this.onSave = this.onSave.bind(this);
     this.getPost = this.getPost.bind(this);
+    this.onImageChange = this.onImageChange.bind(this);
   }
 
   state = {
@@ -18,6 +19,8 @@ class NewPost extends React.Component {
     content: '',
     id: undefined,
     show: false,
+    title_image: undefined,
+    title_image_preview: undefined,
   }
 
   componentDidMount() {
@@ -34,6 +37,8 @@ class NewPost extends React.Component {
         title: response.data.title,
         description: response.data.description,
         content: response.data.content,
+        title_image: 'old',
+        title_image_preview: response.data.title_image.url,
       });
     })
   }
@@ -51,52 +56,76 @@ class NewPost extends React.Component {
   }
 
   onSave() {
-    const { id } = this.state;
-    const params = {
-      post: {
-        ...this.state,
-      }
-    }
-    delete params['post']['show'];
+    const { id, title, description, content, title_image } = this.state;
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('content', content);
+    if (title_image !== 'old') { formData.append('title_image', title_image); }
     if (id) {
-      this.updatePost(params);
+      this.updatePost(id, formData);
     } else {
-      this.createPost(params);
+      this.createPost(formData);
     }
   }
 
-  updatePost(params) {
-    const postId = params['post']['id'];
-    delete params['post']['id'];
-    Api.makePutRequest({
-      url: `/api/posts/${postId}`,
-      body: params,
+  updatePost(postId, formData) {
+    Api.createOrUpdatePost({
+      formData,
+      id: postId,
     }).then((response) => {
       this.setState({
         show: true,
       });
+    })
+    .catch((error) => {
+      console.log(error.response.data.errors);
     });
   }
 
-  createPost(params) {
-    Api.makePostRequest({
-      url: '/api/posts',
-      body: params,
+  createPost(formData) {
+    Api.createOrUpdatePost({
+      formData,
+      id: null,
     }).then((response) => {
       this.setState({
         show: true,
         id: response.data.id,
       });
     })
+    .catch((error) => {
+      console.log(error.response.data.errors);
+    });
+  }
+
+  onImageChange(e) {
+    if (e.target.files.length) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      const file = e.target.files[0];
+      reader.onload = () => {
+        this.setState({
+          title_image: file,
+          title_image_preview: reader.result,
+        });
+      }
+    };
   }
 
   render() {
-    const { show, id, title, description, content } = this.state;
+    const { show, id, title, description, content, title_image_preview } = this.state;
     if (show) { return (<Redirect to={`/post/${id}`} />); }
 
     return (
       <div className="new-post">
         <form>
+          <div className="form group main-image files">
+            <label>Upload Your image</label>
+            <input type="file" className="form-control" onChange={this.onImageChange} />
+          </div>
+          <div className="title-image-preview">
+            <img src={title_image_preview} alt="" />
+          </div>
           <div className="form-group half-container">
             <input type="text" className="form-control" placeholder="Title" name='title' value={title} onChange={this.onTextChange} />
           </div>
@@ -130,13 +159,8 @@ class NewPost extends React.Component {
                   input.onchange = function () {
                     var file = this.files[0];
                     var reader = new FileReader();
-                    reader.onload = function () {
-                      var id = 'blobid' + (new Date()).getTime();
-                      var base64 = reader.result.split(',')[1];
-                      var blobCache = window.tinymce.activeEditor.editorUpload.blobCache;
-                      var blobInfo = blobCache.create(id, file, base64);
-
-                      cb(blobInfo.blobUri(), { title: file.name });
+                    reader.onload = function(e) {
+                      cb(e.target.result, { title: file.name });
                     };
                     reader.readAsDataURL(file);
                   };

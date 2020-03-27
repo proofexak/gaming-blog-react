@@ -43,6 +43,9 @@ class ShowPost extends React.Component {
             </div>
           ) : undefined
           }
+          <div className="post-image">
+            <img src={post.title_image.url} alt="" />
+          </div>
           <div className="post-title">
             {post.title}
           </div>
