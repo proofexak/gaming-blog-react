@@ -1,3 +1,5 @@
+import { post, put } from 'axios';
+
 const csrfToken = () => {
   const csrf = document.getElementsByName('csrf-token')[0];
 
@@ -53,6 +55,22 @@ export const makePostRequest = params => fetch(`${ApiURL}${params.url}`, {
     };
   })
 ));
+
+export const createOrUpdatePost = params => {
+  const config = { 
+    headers: {
+      'X-CSRF-Token': csrfToken(),
+      Accept: 'application/json',
+      'content-type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
+    }
+  };
+  if (params.id) {
+    return put(`${ApiURL}/api/posts/${params.id}`, params.formData, config);
+  } else {
+    return post(`${ApiURL}/api/posts`, params.formData, config);
+  }
+}
 
 export const makeGetRequest = data => fetch(`${ApiURL}${data.url}`, {
   headers: {

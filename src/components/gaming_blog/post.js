@@ -13,6 +13,9 @@ class Post extends React.Component {
 
     return (
       <div className="post">
+        <div className="title-image">
+          <img src={post.title_image.thumbnail.url} alt="" />
+        </div>
         <div className="title" onClick={() => this.setState({ show: true })}>
           { post.title }
         </div>
