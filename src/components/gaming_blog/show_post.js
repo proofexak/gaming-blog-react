@@ -1,4 +1,6 @@
 import React from 'react';
+import Comments from './comments';
+import NewComment from './new_comment';
 import * as Api from '../shared/api';
 import reduxConnect from '../shared/reduxConnect';
 import { Redirect } from 'react-router-dom';
@@ -8,6 +10,7 @@ class ShowPost extends React.Component {
     super(props);
 
     this.getPost = this.getPost.bind(this);
+    this.pushComment = this.pushComment.bind(this);
   }
 
   state = {
@@ -28,6 +31,10 @@ class ShowPost extends React.Component {
         post: response.data,
       });
     })
+  }
+
+  pushComment(comment) {
+    this.comments.pushComment(comment);
   }
 
   render() {
@@ -53,6 +60,10 @@ class ShowPost extends React.Component {
             {post.description}
           </div>
           <div className="post-content" dangerouslySetInnerHTML={{__html: post.content}} />
+          <div className="comment-section">
+            <Comments ref={(comments) => { this.comments = comments }} postId={post.id} />
+            <NewComment postId={post.id} pushComment={this.pushComment} />
+          </div>
         </div>
       )
     } else {
